@@ -1,4 +1,4 @@
-
+package scorer;
 
 import java.io.IOException;
 

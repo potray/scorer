@@ -1,17 +1,8 @@
 package scorer;
-/**
- * 
- */
-
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
-
-/**
- * @author Daniel Díaz Salas
- *
- */
 
 @XmlRootElement
 public class User {
@@ -56,3 +47,4 @@ public class User {
 		this.id = id;
 	}
 }
+

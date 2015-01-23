@@ -1,18 +1,20 @@
 package scorer;
 
-import javax.persistence.GeneratedValue;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class User {
 	@Id
-	@GeneratedValue
-	private long id;
 	private String name;
+	private List <Score> scores;
 	
 	public User (String name){
 		this.name = name;
+		scores = new ArrayList <Score> ();
 	}
 	
 	public User (){
@@ -32,19 +34,13 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	/**
-	 * @return the id
+	 * Add a new score to the user
+	 * @param s the score to add
 	 */
-	public long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(long id) {
-		this.id = id;
+	public void addScore (Score s){
+		scores.add(s);
 	}
 }
 

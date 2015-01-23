@@ -16,7 +16,7 @@
   </servlet-mapping>
   <filter>
     <filter-name>scorerCors</filter-name>
-    <filter-class>scorer.CorsFilter</filter-class>
+    <filter-class>scorer.CORSFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>scorerCors</filter-name>

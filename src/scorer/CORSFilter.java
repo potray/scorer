@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
-public class CorsFilter implements Filter {
+public class CORSFilter implements Filter {
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub		

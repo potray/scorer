@@ -21,15 +21,15 @@ public class Scorer {
 	 * @param json a JSON string with parameters
 	 * @return a response to the client
 	 */
+	@SuppressWarnings("unchecked")//This removes the response.put warning
 	@POST
 	@Path("/addScore")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public String addScore(String json){
 		//Parse json
-		System.out.println(json);
 		JSONObject obj = (JSONObject) JSONValue.parse(json);
-		String userName = (String) obj.get("userName");
+		String userName = (String) obj.get("userName");				
 		String game = (String) obj.get("game");
 		long score = (long) obj.get("score");
 		
@@ -37,11 +37,11 @@ public class Scorer {
 		Score newScore = new Score(game, score);
 		DBManager.insertScore(userName, newScore);
 		
-		String response = "ok!";
+		//Create response
+		JSONObject response = new JSONObject();
+		response.put("response", "Ok");
 		
-		System.out.println(json);
-		
-		return response;
+		return response.toJSONString();
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class Scorer {
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public String scores (){
 		//Get a list with the users
-		List <User> users = DBManager.getAllusers();
+		List <ScorerUser> users = DBManager.getAllusers();
 		
 		//Put all users in a JSON
 		return (JSONValue.toJSONString(users));	

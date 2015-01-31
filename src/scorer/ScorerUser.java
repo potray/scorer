@@ -3,21 +3,25 @@ package scorer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
 @XmlRootElement
-public class User {
+public class ScorerUser {
 	@Id
 	private String name;
 	private List <Score> scores;
 	
-	public User (String name){
+	public ScorerUser (String name){
 		this.name = name;
 		scores = new ArrayList <Score> ();
 	}
 	
-	public User (){
+	public ScorerUser (){
 		
 	}
 

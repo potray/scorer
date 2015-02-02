@@ -1,11 +1,18 @@
 package scorer;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class Score implements Serializable{
+import org.json.simple.JSONAware;
+import org.json.simple.JSONObject;
+
+public class Score implements Serializable, JSONAware{
 	private static final long serialVersionUID = 1L;
 	private String game;
 	private long score;
+	private Date date;
 	
 	/**
 	 * Constructor with arguments
@@ -15,6 +22,7 @@ public class Score implements Serializable{
 	public Score(String game, long score) {
 		this.game = game;
 		this.score = score;
+		this.date = new Date();
 	}
 	/**
 	 * @return the game
@@ -39,5 +47,15 @@ public class Score implements Serializable{
 	 */
 	public void setScore(long score) {
 		this.score = score;
+	}
+	@SuppressWarnings("unchecked")//This removes the JSONObject.put warning
+	@Override
+	public String toJSONString() {
+		JSONObject obj = new JSONObject();
+		obj.put("game", game);
+		obj.put("score", score);
+		obj.put("date", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		
+		return obj.toString();
 	}
 }

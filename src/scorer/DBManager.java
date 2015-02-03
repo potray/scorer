@@ -24,18 +24,71 @@ public class DBManager {
 		//Find user
 		ScorerUser u = em.find(ScorerUser.class, userName);
 		
-		//Create user if needed
-		if (u == null){
-			u = new ScorerUser(userName);
-			em.persist(u);
-		}
-		
 		//Add score in a transaction
 		em.getTransaction().begin();
 		u.addScore(score);
 		u.addGame(score.getGame());
 		em.getTransaction().commit();
 		em.close();		
+	}
+	
+	/**
+	 * Create a new user if the user {@code userName} doesn't exists.
+	 * @param userName the name of the new user
+	 * @param password the password of the new user
+	 * @return if the user was created successfully
+	 */
+	public static boolean createUser (String userName, String password){
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();
+		boolean ok = true;
+		
+		//Find user
+		ScorerUser u = em.find(ScorerUser.class, userName);
+		
+		//Create it if it doesn't exists
+		if (u == null){
+			System.out.println("Creating " + userName);
+			ScorerUser newUser = new ScorerUser(userName, password);
+			em.getTransaction().begin();
+			em.persist(newUser);		
+			em.getTransaction().commit();
+		}else{
+			System.out.println(userName + " already exist");
+			ok = false;
+		}
+		
+		em.close();
+		return ok;
+	}
+	
+	/**
+	 * Checks if a password is correct.
+	 * @param userName the name of the user
+	 * @param password the password to check if it belongs to the user
+	 * @return a String with 3 possible values: "User doesn't exist", "Ok" or "Incorrect password"
+	 */
+	public static String validatePassword (String userName, String password){
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();
+		String message;
+		
+		//Find user
+		ScorerUser u = em.find(ScorerUser.class, userName);
+		
+		//If it doesn't exists return a message
+		if (u == null){
+			message = "User doesn't exist";
+		}else{
+			//Validate password
+			if (u.getPassword().equals(password))
+				message = "Ok";
+			else
+				message = "Incorrect password";
+		}
+		
+		em.close();
+		return message;
 	}
 	
 	/**
@@ -48,6 +101,8 @@ public class DBManager {
 
 		//Do the query
 		Query q = em.createQuery("SELECT u FROM ScorerUser u");
+		
+		em.close();
 		return q.getResultList();		
 	}
 	
@@ -72,6 +127,8 @@ public class DBManager {
 				iterator.remove();
 			}				
 		}		
+		
+		em.close();
 		return allUsers;	
 	}
 	

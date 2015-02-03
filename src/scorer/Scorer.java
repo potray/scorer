@@ -26,8 +26,8 @@ public class Scorer {
 	@SuppressWarnings("unchecked")//This removes the JSONObject.put warning
 	@POST
 	@Path("/addScore")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String addScore(String json){
 		//Parse JSON
 		JSONObject obj = (JSONObject) JSONValue.parse(json);
@@ -46,10 +46,54 @@ public class Scorer {
 		return response.toJSONString();
 	}
 	
+	@SuppressWarnings("unchecked")//This removes the JSONObject.put warning
+	@POST
+	@Path("/register")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String register (String json){
+		//Parse JSON
+		JSONObject obj = (JSONObject) JSONValue.parse(json);
+		String userName = (String) obj.get("userName");		
+		String password = (String) obj.get("password");
+		
+		//Create user
+		boolean userCreated = DBManager.createUser(userName, password);
+		
+		//Create response
+		JSONObject response = new JSONObject();
+		response.put("response", userCreated);
+		
+		return response.toJSONString();		
+	}
+	
+	@SuppressWarnings("unchecked")//This removes the JSONObject.put warning
+	@POST
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String login (String json){
+		//Parse JSON
+		JSONObject obj = (JSONObject) JSONValue.parse(json);
+		String userName = (String) obj.get("userName");		
+		String password = (String) obj.get("password");
+		
+		//Validate password
+		String code = DBManager.validatePassword(userName, password);
+		
+		//Create response
+		JSONObject response = new JSONObject();
+		response.put("response", code);
+		
+		return response.toJSONString();
+	}
+	
 	/**
-	 * @param game
-	 * @param userName
-	 * @return
+	 * Gets all the scores from a user obtained in a game.
+	 * @param game the game
+	 * @param userName the name of the user
+	 * @return if {@code userName} is not specified returns all the scores of {@code game}. Else, it gets all the scores
+	 * from {code userName} obtained in {@code game}
 	 */
 	@GET
 	@Path("/scores")

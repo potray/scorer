@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,11 +16,13 @@ import org.json.simple.JSONValue;
 public class ScorerUser implements JSONAware{
 	@Id
 	private String name;
+	private String password;
 	private List <Score> scores;
 	private List <String> games;
 	
-	public ScorerUser (String name){
+	public ScorerUser (String name, String password){
 		this.name = name;
+		this.password = password;
 		scores = new ArrayList <Score> ();
 		games = new ArrayList <String> ();
 	}
@@ -46,6 +46,13 @@ public class ScorerUser implements JSONAware{
 		this.name = name;
 	}
 	
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
 	/**
 	 * @return the games
 	 */

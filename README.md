@@ -66,7 +66,7 @@ Example of a valid output: {"Simpliest Game in the World", "Other game", "And an
 It gets all the games a user has ever played. Note that the user must exist in the system. 
 
 ###Libraries used
-Since some of this libraries have licenses I decided not to distribute a single one of them. But if anyone wants to clone this repository and use (I recommend using Eclipse IDE since that's what I used), here is a list of all the jars I have in the WebContent/WEB-INF/lib folder.
+Since some of this libraries have licenses I decided not to distribute a single one of them. But if anyone wants to clone this repository and use it (I recommend using Eclipse IDE since that's what I used), here is a list of all the jars I have in the WebContent/WEB-INF/lib folder.
 
 - aopalliance-repackaged-2.4.0-b06.jar
 - asm-debug-all-5.0.2.jar

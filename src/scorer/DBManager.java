@@ -30,6 +30,8 @@ public class DBManager {
 		u.addGame(score.getGame());
 		em.getTransaction().commit();
 		em.close();		
+		
+		System.out.println("Score inserted");
 	}
 	
 	/**
@@ -134,14 +136,18 @@ public class DBManager {
 	
 	/**
 	 * Gets a user.
-	 * @param userName the user name to find.
-	 * @return
+	 * @param userName the user name to find
+	 * @return the user
 	 */
 	public static ScorerUser getUserByName (String userName){
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();	
 		
-		return em.find(ScorerUser.class, userName);		
+		ScorerUser u = em.find(ScorerUser.class, userName);	
+		
+		em.close();
+		
+		return u;	
 	}
 
 }
